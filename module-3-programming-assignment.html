@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CMPS 260: Module 3 Programming Assignment</title>
+<style>* { font-family: monospace; }</style>
+<script>
+
+// NOTE: You must implement the data structures using the no prototype approach.
+//       This is what the book uses, so you can copy it.
+//       See also: https://it.pointpark.edu/tutorials/no-prototype-vs-prototype/
+
+// NOTE: Please review the following links regularly:
+//       https://it.pointpark.edu/tutorials/arrays-vs-objects/
+//       https://it.pointpark.edu/tutorials/no-prototype-vs-prototype/
+//       https://it.pointpark.edu/tutorials/implementation-vs-interface/
+
+
+
+//--------------------------------//
+// The linked list data structure //
+//--------------------------------//
+console.log("The linked list data structure");
+
+// 1. Suppose you have an array with 1,000 elements and a linked list with 1,000
+//    elements. For both data structures, you want to retrieve the last entry.
+//    Does one data structure complete that operation before the other (i.e.,
+//    is it faster)? If yes, how much faster? If no, why does it take the same
+//    amount of time?
+
+// an array is faster, allowing direct access using an index
+// a linked list starts at the head and moves through each node until last is found
+
+//------------------------//
+// Creating a linked list //
+//------------------------//
+console.log("Creating a linked list");
+
+// We are going to implement the linked list data structure described in the
+// book. Instead of using 'let' we use 'var' everywhere. Note that this
+// implementation does not use the prototype (see homework). Here is a skeleton
+// that we will work on completing:
+
+function LinkedList() {
+
+  // helper class
+  function Node(element) {
+    this.element = element;
+    this.next = null;
+  }
+
+  // store length and head
+  var length = 0;
+  var head = null;
+
+  this.append = function(element) {
+  var node = new Node(element);
+
+  if (head === null) {
+    head = node;
+  } else {
+    var current = head;
+    while (current.next) {
+      current = current.next;
+    }
+    current.next = node;
+  }
+
+    length++;
+
+  };
+
+
+  this.insert = function(position, element) {
+    
+    if (position < 0 || position > length) {
+      return false;
+    }
+
+    var node = new Node(element);
+    var current = head;
+    var previous;
+    var index = 0;
+
+    if (position === 0) {
+      node.next = head;
+      head = node;
+    } else {
+
+      while (index < position){
+        previous = current;
+        current = current.next;
+        index++;
+      }
+      node.next = current;
+      previous.next = node;
+    }
+    length++;
+    return true;
+  };
+
+  this.removeAt = function(position) {
+   if (position < 0 || position >= length){
+    return null;
+   }
+
+   var current = head;
+   var previous;
+   var index = 0;
+
+   if (position === 0){
+    head = current.next;
+   } else {
+    while (index < position){
+      previous = current;
+      current = current.next;
+      index++;
+    }
+    previous.next = current.next;
+   }
+   length--;
+   return current.element;
+  };
+
+  this.remove = function(element) {
+    return this.removeAt(this.indexOf(element));
+  };
+
+  this.indexOf = function(element) {
+var current = head;
+    var index = 0;
+
+    while (current) {
+      if (current.element === element) {
+        return index;
+      }
+      current = current.next;
+      index++;
+    }
+    return -1; 
+  };
+
+  this.isEmpty = function() {
+    return length === 0;
+  };
+
+  this.size = function() {
+    return length;
+  };
+
+  this.getHead = function() {
+    return head;
+  }
+
+  this.toString = function() {
+    // overwrite the default toString method
+    var current = head;
+    var string = "List: ";
+    while (current) {
+      string += current.element + (current.next ? " -> " : "");
+      current = current.next;
+    }
+    return string;
+  };
+
+  this.print = function() {
+    console.log(this.toString());
+  };
+
+}
+
+// create a linked list to operate on
+var list = new LinkedList();
+
+// 1. Write pseudo code (meaning; use comments) to describe how you would
+//    implement the append method. HINT: What two scenarios can you distinguish?
+
+//append sudocode
+// if list is empty, make new node the head
+//if not empty, move to the last node and link the new node to the last node 
+
+
+// 2. Translate your pseudo code into actual code and test it.
+//    HINT: Use list.print() to test your code.
+
+list.append(10);
+list.append(20);
+list.append(30);
+list.print();
+
+// 3. Repeat (1) and (2) for insert.
+
+//insert sudocode
+//check if position is valid
+//if position is 0, make new node the head and link it to the old head
+//if position is not 0, move to the node before the position and adjust the links to insert the new node
+
+list.insert(1, 15);
+list.print();
+
+// 4. Repeat (1) and (2) for removeAt.
+
+//removeAt sudocode
+//check if position is valid
+//if removing first node, move head
+//otherwise find node, connect previous node to the next node 
+
+
+console.log("Removed: ", list,removeAt(2));
+list.print();
+
+// 5. Repeat (1) and (2) for remove.
+
+//remove sudocode 
+//find index of element 
+//call removeAt with that index
+
+list.remove(15);
+list.print();
+
+
+// 6. Repeat (1) and (2) for indexOf.
+
+//indexOf sudocode
+//start at head, compare each element, return index if found, return -1 if not found
+
+console.log("Index of 20: ", list.indexOf(20));
+console.log("Index of 100:", list.indexOf(100));
+
+
+// 7. Repeat (1) and (2) for isEmpty.
+
+//isEmpty sudocode
+//check if length is 0, return true if it is
+
+console.log("Is empty: ", list.isEmpty());
+
+// 8. Repeat (1) and (2) for size.
+
+//size sudocode
+//return length
+
+console.log("Size: ", list.size());
+
+// 9. Repeat (1) and (2) for getHead.
+
+//getHead sudocode
+//return head
+
+console.log("Head:", list.getHead());
+
+</script>
+</head>
+<body>
+  See console!
+</body>
+</html>
