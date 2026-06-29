@@ -60,7 +60,7 @@ function LinkedList() {
     head = node;
   } else {
     var current = head;
-    while (current.next) {
+    while (current.next !== null) {
       current = current.next;
     }
     current.next = node;
@@ -156,8 +156,8 @@ var current = head;
     // overwrite the default toString method
     var current = head;
     var string = "List: ";
-    while (current) {
-      string += current.element + (current.next ? " -> " : "");
+    while (current !== null) {
+      string += current.element.name + (current.next !== null ? " -> " : "");
       current = current.next;
     }
     return string;
