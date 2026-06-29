@@ -156,8 +156,8 @@ var current = head;
     // overwrite the default toString method
     var current = head;
     var string = "List: ";
-    while (current !== null) {
-      string += current.element.name + (current.next !== null ? " -> " : "");
+    while (current) {
+      string += current.element + (current.next ? " -> " : "");
       current = current.next;
     }
     return string;
