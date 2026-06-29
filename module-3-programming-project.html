@@ -32,7 +32,7 @@ function LinkedList() {
   this.length = 0;
 }
 
-linkedList.prototype.append = function(element){
+LinkedList.prototype.append = function(element){
   var node = new Node(element);
 
   if(this.head === null){
@@ -47,11 +47,11 @@ linkedList.prototype.append = function(element){
   this.length++;
 };
 
- linkedList.prototype.size = function(){
+ LinkedList.prototype.size = function(){
   return this.length;
 } ;
 
-linkedList.prototype.toString = function(){
+LinkedList.prototype.toString = function(){
   var current = this.head;
   var string = "";
   while(current !== null){
@@ -65,7 +65,7 @@ linkedList.prototype.toString = function(){
   return string;
 };
 
-linkedList.prototype.print = function(){
+LinkedList.prototype.print = function(){
   console.log(this.toString());
 };
 
@@ -116,7 +116,7 @@ list2.append(a2);
 //    the node in a linked list at a given position (make sure to return the
 //    node and not the element!).
 
-linkedList.prototype.getNodeAt = function(position){
+LinkedList.prototype.getNodeAt = function(position){
   if(position < 0 || position >= this.length){
     return null;
   }
@@ -132,7 +132,7 @@ linkedList.prototype.getNodeAt = function(position){
 // 4. Implement an appendNode(node) method (using the prototype) that appends a
 //    node to a linked list (as opposed to an element!).
 
-linkedList.prototype.appendNode = function(node){
+LinkedList.prototype.appendNode = function(node){
   if(this.head === null){
     this.head = node;
   } else {
