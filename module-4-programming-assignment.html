@@ -71,13 +71,13 @@ console.log(set.values());
 console.log(set.has(2));
 console.log(set.size());
 
-console.delete(2);
+set.delete(2);
 
 console.log(set.values());
 console.log(set.has(2));
 console.log(set.size());
 
-console.clear();
+set.clear();
 
 console.log(set.values());
 console.log(set.size());
@@ -95,7 +95,7 @@ this.union = function(otherSet) {
   for (var i = 0; i < values.length; i++) {
     unionSet.add(values[i]);
   }
-  var = otherSet.values();
+  values = otherSet.values();
   for (var i = 0; i < values.length; i++) {
     unionSet.add(values[i]);
   }
