@@ -63,24 +63,24 @@ function Set() {
 
 var set = new Set();
 
-set.add(1);
-set.add(2);
-set.add(3);
+Set.add(1);
+Set.add(2);
+Set.add(3);
 
-console.log(set.values());
-console.log(set.has(2));
-console.log(set.size());
+console.log(Set.values());
+console.log(Set.has(2));
+console.log(Set.size());
 
-set.delete(2);
+Set.delete(2);
 
-console.log(set.values());
-console.log(set.has(2));
-console.log(set.size());
+console.log(Set.values());
+console.log(Set.has(2));
+console.log(Set.size());
 
-set.clear();
+Set.clear();
 
-console.log(set.values());
-console.log(set.size());
+console.log(Set.values());
+console.log(Set.size());
 
 //----------------//
 // Set operations //
@@ -89,7 +89,7 @@ console.log("Set operations");
 
 // 1. Implement the union set function in Set above.
 
-this.union = function(otherSet) {
+Set.prototype.union = function(otherSet) {
   var unionSet = new Set();
   var values = this.values();
   for (var i = 0; i < values.length; i++) {
@@ -104,7 +104,7 @@ this.union = function(otherSet) {
 
 // 2. Implement the intersection set function in Set above.
 
-this.intersection = function(otherSet) {
+Set.prototype.intersection = function(otherSet) {
   var intersectionSet = new Set();
   var values = this.values();
   for (var i = 0; i < values.length; i++) {
@@ -117,7 +117,7 @@ this.intersection = function(otherSet) {
 
 // 3. Implement the set difference function in Set above.
 
-this.difference = function(otherSet) {
+Set.prototype.difference = function(otherSet) {
   var differenceSet = new Set();
   var values = this.values();
   for (var i = 0; i < values.length; i++) {
@@ -130,7 +130,7 @@ this.difference = function(otherSet) {
 
 // 4. Implement the subset function in Set above.
 
-this.subset = function(otherSet) {
+Set.prototype.subset = function(otherSet) {
   if (this.size() > otherSet.size()) {
     return false;
   }
@@ -143,28 +143,28 @@ this.subset = function(otherSet) {
   return true;
 };
 
-var setA = new Set();
-setA.add(1);
-setA.add(2);
-setA.add(3);
+var SetA = new Set();
+SetA.add(1);
+SetA.add(2);
+SetA.add(3);
 
-var setB = new Set();
-setB.add(3);
-setB.add(4);
-setB.add(5);
+var SetB = new Set();
+SetB.add(3);
+SetB.add(4);
+SetB.add(5);
 
-console.log("Set A: " + setA.values());
-console.log("Set B: " + setB.values());
+console.log("Set A: " + SetA.values());
+console.log("Set B: " + SetB.values());
 
-console.log("Union: " + setA.union(setB).values());
-console.log("Intersection: " + setA.intersection(setB).values());
-console.log("Difference: " + setA.difference(setB).values());
+console.log("Union: " + SetA.union(SetB).values());
+console.log("Intersection: " + SetA.intersection(SetB).values());
+console.log("Difference: " + SetA.difference(SetB).values());
 
-var setC = new Set();
-setC.add(1);
-setC.add(2);
+var SetC = new Set();
+SetC.add(1);
+SetC.add(2);
 
-console.log("Subset: " + setC.subset(setA));
+console.log("Subset: " + SetC.subset(SetA));
 
 //--------------//
 // Dictionaries //
@@ -180,43 +180,39 @@ function Dictionary() {
   var items = {};
 
   this.set = function(key, value) {
-    // add a new key-value pair to the dictionary
-    // ...
+    items[key] = value;
   };
 
   this.delete = function(key) {
-    // delete a key-value pair
-    // ...
+    if (this.has(key)) {
+      delete items[key];
+      return true;
+    }
+    return false;
   };
 
   this.has = function(key) {
-    // return true if key is in the dictionary, false otherwise
-    // ...
+    return items.hasOwnProperty(key);
   };
 
   this.get = function(key) {
-    // return the value that matches key
-    // ...
+    return this.has(key) ? items[key] : undefined;
   };
 
   this.clear = function() {
-    // remove all key-value pairs
-    // ...
+    items = {};
   };
 
   this.size = function() {
-    // return the number of key-value pairs
-    // ...
+    return Object.keys(items).length;
   };
 
   this.keys = function() {
-    // return an array of all the keys
-    // ...
+    return Object.keys(items);
   };
 
   this.values = function() {
-    // return an array of all the values
-    // ...
+    return Object.values(items);
   };
 
   this.getItems = function() {
@@ -224,9 +220,27 @@ function Dictionary() {
   };
 }
 
+
 // 2. Write some tests that show that your code works.
 
+var dict = new Dictionary();
 
+dict.set("name", "John");
+dict.set("age", 30);
+dict.set("city", "Pittsburgh");
+
+console.log(dict.keys());
+console.log(dict.values());
+console.log(dict.get("age"));
+
+dict.delete("age");
+
+console.log(dict.keys());
+console.log(dict.has("age"));
+
+dict.clear();
+
+console.log(dict.size());
 
 //----------------//
 // The hash table //
@@ -381,17 +395,22 @@ function HashTable() {
   }
 
   this.put = function(key, value) {
-    // add or update a new item
-    // ...
+    var position = loseloseHashCode(key);
+    table[position] = value;
   };
 
   this.remove = function(key) {
-    // remove an item
-    // ...
+    var position = loseloseHashCode(key);
+    if(table[position] !== undefined) {
+      table[position] = undefined;
+      return true;
+    }
+    return false;
   };
 
   this.get = function(key) {
-    // return the value that matches key
+    var position = loseloseHashCode(key);
+    return table[position];
   };
 
   this.print = function() {
@@ -406,9 +425,24 @@ function HashTable() {
 
 // 2. Write some tests that show that your code works.
 
+var hashTable = new HashTable();
+
+hashTable.put("name", "John");
+hashTable.put("age", 30);
+hashTable.put("city", "Pittsburgh");
+
+hashTable.print();
+
+console.log(hashTable.get("age"));
+
+hashTable.remove("age");
+hashTable.print();
+
 // 3. Modify your implementation to use separate chaining (for linked list, see
 //    above) for resolving collisions. We also need ValuePair, which is provided
 //    above.
+
+
 
 // 4. We will skip linear probing because the implementation in the book has
 //    quite a serious bug in it. Can you find the bug (don't spend much time)?
